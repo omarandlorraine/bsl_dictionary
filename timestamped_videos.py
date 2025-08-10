@@ -18,7 +18,7 @@ def parse(ts, url):
     # and then timestamp the URL.
     (minutes, seconds) = time.split(':')
     (minutes, seconds) = (int(minutes), int(seconds))
-    cgi = f"?t={minutes * 60 + seconds}s"
+    cgi = f"&t={minutes * 60 + seconds}s"
     url = f"{url}{cgi}"
 
     return link.Link(lemma, url)
