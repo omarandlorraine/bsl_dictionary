@@ -31,6 +31,7 @@ def check():
     def extract_lemma(e):
         return e.split(']')[0].removeprefix(" - [")
 
+    success = True
     kv = {}
     for i in entries:
         l = extract_lemma(i)
@@ -38,9 +39,10 @@ def check():
             print("duplicated lemma:")
             print(kv[l])
             print(i)
+            success = False
         else:
             kv[l] = i
-    return entries == sort(entries)
+    return success and entries == sort(entries)
 
 if __name__ == "__main__":
     import sys
