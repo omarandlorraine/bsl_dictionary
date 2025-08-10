@@ -28,6 +28,18 @@ def add_many(entries):
 
 def check():
     entries = load()
+    def extract_lemma(e):
+        return e.split(']')[0].removeprefix(" - [")
+
+    kv = {}
+    for i in entries:
+        l = extract_lemma(i)
+        if l in kv.keys():
+            print("duplicated lemma:")
+            print(kv[l])
+            print(i)
+        else:
+            kv[l] = i
     return entries == sort(entries)
 
 if __name__ == "__main__":
