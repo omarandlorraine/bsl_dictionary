@@ -18,4 +18,4 @@ jobs:
 
     - name: Check dictionary is alphabetical
       run: |
-        sort -c -f dictionary.md
+        LC_ALL=C sort -c -f dictionary.md
