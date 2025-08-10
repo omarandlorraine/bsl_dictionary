@@ -48,9 +48,9 @@ def prompt_for_timestamps(url):
         timestamps += ts.split("\n")
         ts = input(": ")
 
+    while not timestamps[0]:
+        timestamps = timestamps[1:]
     entries = [(timestamps[i], timestamps[i+1]) for i in range(0, len(timestamps), 2) if timestamps[i] and timestamps[i+1]]
-    while not entries[0]:
-        entries = entries[1:]
     return [entry for entry in [parse(ts, url) for ts in entries] if entry]
 
 def prompts():
