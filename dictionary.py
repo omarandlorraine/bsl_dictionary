@@ -14,24 +14,34 @@ def append_many(entries):
     for entry in entries:
         append_one(entry)
 
-def writeback(entries):
-    entries = sorted(entries, key=str.casefold)
+def load():
+    with open("dictionary.md", "r") as f:
+        return f.readlines()
+
+def sort(entries):
+    return sorted(entries, key=str.casefold)
+
+def save(entries):
     with open("dictionary.md", "w") as f:
         for entry in entries:
             f.write(entry)
 
 def add(link):
-    entries = []
-    with open("dictionary.md", "r") as f:
-        entries = f.readlines()
+    entries = load()
     entries += [link.markdown()]
-    writeback(entries)
+    save(sort(entries))
+
+def check():
+    entries = load()
+    return entries == sort(entries)
 
 if __name__ == "__main__":
     import sys
     command = sys.argv[1]
     if command == "check":
-        check()
+        sys.exit(0 if check() else 1)
+    elif command == "sort":
+        save(sort(load()))
     elif command == "add":
         lemma = sys.argv[2]
         url = sys.argv[3]
