@@ -4,6 +4,8 @@ import re
 
 class Link:
     def __init__(self, lemma, url, sublemma=None):
+        lemma = lemma.removeprefix("–")
+        lemma = lemma.removeprefix("-")
         self.lemma = lemma.strip()
         self.url = url
         self.sublemma = sublemma
@@ -17,6 +19,6 @@ class Link:
         return Link(lemma, url)
 
     def markdown(self):
-        return f" - [{self.lemma}]({self.url})"
+        return f" - [{self.lemma}]({self.url})\n"
 
             

@@ -4,6 +4,7 @@
 timestamps, and then adds those to the dictionary. """
 
 import link
+import dictionary
 
 def parse(ts, url):
     # So ts could be something like "1:23 meaning of word" and here we separate "1:23" and "meaning of word"
@@ -11,10 +12,14 @@ def parse(ts, url):
     lemma = ' '.join(ts.split(' ')[1:])
 
     # next figure out number of seconds
-    (minutes, seconds) = time.split(':')
-    (minutes, seconds) = (int(minutes), int(seconds))
-    cgi = f"?t={minutes * 60 + seconds}s"
-    
+    try:
+        (minutes, seconds) = time.split(':')
+        (minutes, seconds) = (int(minutes), int(seconds))
+        cgi = f"?t={minutes * 60 + seconds}s"
+    except ValueError:
+        print(f"Warning: couldn't figure out the timestamp for {ts}")
+        return None
+
     # and then timestamp the URL.
     (minutes, seconds) = time.split(':')
     (minutes, seconds) = (int(minutes), int(seconds))
@@ -40,11 +45,10 @@ def prompt_for_timestamps(url):
         timestamps += ts.split("\n")
         ts = input(": ")
 
-    return [parse(ts, url) for ts in timestamps]
+    return [entry for entry in [parse(ts, url) for ts in timestamps if ts] if entry is not None]
 
 def prompts():
-    for url in prompt_for_timestamps(prompt_for_link()):
-            print(url.markdown())
+    dictionary.append_many(prompt_for_timestamps(prompt_for_link()))
 
 if __name__ == "__main__":
     prompts()
