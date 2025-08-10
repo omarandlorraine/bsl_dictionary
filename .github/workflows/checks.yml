@@ -18,4 +18,4 @@ jobs:
 
     - name: Check dictionary is alphabetical
       run: |
-        LC_ALL=C sort -c -f dictionary.md
+        awk 'match($0, /\[([^]]+)\]/, m) { print tolower(m[1]) "\t" $0 }' dictionary.md | LC_ALL=C sort -k1,1 -s -c
