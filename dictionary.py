@@ -15,7 +15,7 @@ def append_many(entries):
         append_one(entry)
 
 def writeback(entries):
-    entries = sorted(entries)
+    entries = sorted(entries, key=str.casefold)
     with open("dictionary.md", "w") as f:
         for entry in entries:
             f.write(entry)
