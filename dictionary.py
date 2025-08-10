@@ -5,15 +5,6 @@ use this to add word/links to the dictinoary. """
 
 from link import Link
 
-def append_one(entry):
-    print(entry.markdown())
-    with open("dictionary.md", "a") as f:
-        f.write(entry.markdown())
-
-def append_many(entries):
-    for entry in entries:
-        append_one(entry)
-
 def load():
     with open("dictionary.md", "r") as f:
         return f.readlines()
@@ -30,6 +21,10 @@ def add(link):
     entries = load()
     entries += [link.markdown()]
     save(sort(entries))
+
+def add_many(entries):
+    for entry in entries:
+        add(entry)
 
 def check():
     entries = load()
